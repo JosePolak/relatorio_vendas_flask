@@ -1,14 +1,32 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Início</title>
-</head>
+{% block title %}Relatório{% endblock %}
 
-<body>
-    <h1>Saudação</h1>
-    <p>Olá, Flask!</p>    
-</body>
+{% block content %}
+<h1>{{ titulo }}</h1>
 
-</html>
+<p><strong>Total:</strong> R$ {{ '%.2f'|format(total) }}</p>
+
+
+{% if vendas %}
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Valor (R$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto, valor in vendas %}
+            <tr>
+                <td>{{ produto }}</td>
+                <td class="numero">{{ '%.2f'|format(valor) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Nenhuma venda registrada.</p>
+{% endif %}
+
+{% endblock %}

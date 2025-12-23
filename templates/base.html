@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        nav a {
+            margin-right: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        th, td {
+        padding: 8px;
+        border: 1px solid #000;
+    }
+
+    .numero {
+        text-align: right;
+    }
+    </style>
+
+    <title>{% block title %}Relatório{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">Início</a> |
+        <a href="/sobre">Sobre</a> |
+        <a href="/contato">Contato</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}{% endblock %}
+
+</body>
+
+</html>

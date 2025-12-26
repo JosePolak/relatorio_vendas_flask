@@ -1,15 +1,34 @@
 from flask import Flask, render_template
+import sqlite3
 
 app = Flask(__name__)
 
-@app.route('/')
 
+def get_vendas():
+    conn = sqlite3.connect('database/vendas.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        SELECT produto, quantidade, valor
+        FROM vendas
+    ''')
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    vendas = []
+    for produto, quantidade, valor in rows:
+        vendas.append({
+            'produto': produto,
+            'quantidade': quantidade,
+            'valor': valor
+        })
+    
+    return vendas
+
+@app.route('/')
 def home():
-    vendas = [
-        {'produto': 'Teclado', 'quantidade': 2, 'valor': 150.0},
-        {'produto': 'Mouse', 'quantidade': 3, 'valor': 80.0},
-        {'produto': 'Monitor', 'quantidade': 1, 'valor': 1200.0}
-    ]
+    vendas = get_vendas()
 
     total = sum(item['quantidade'] * item['valor'] for item in vendas)
 

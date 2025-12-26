@@ -1,26 +1,17 @@
 from flask import Flask, render_template
-import csv
-import sqlite3
 
 app = Flask(__name__)
 
-
-def get_vendas():
-    conexao = sqlite3.connect('vendas.db')
-    cursor = conexao.cursor()
-
-    cursor.execute('SELECT produto, valor FROM vendas')
-    vendas = cursor.fetchall()
-
-    conexao.close()
-
-    return vendas
-
-
 @app.route('/')
+
 def home():
-    vendas = get_vendas()
-    total = sum(v[1] for v in vendas)
+    vendas = [
+        {'produto': 'Teclado', 'quantidade': 2, 'valor': 150.0},
+        {'produto': 'Mouse', 'quantidade': 3, 'valor': 80.0},
+        {'produto': 'Monitor', 'quantidade': 1, 'valor': 1200.0}
+    ]
+
+    total = sum(item['quantidade'] * item['valor'] for item in vendas)
 
     return render_template(
         'index.html',

@@ -1,3 +1,11 @@
-__pycache__/
+# ambiente virtual
 venv/
-.env
+
+# python
+__pycache__/
+*.pyc
+
+# banco de dados e dados
+*.db
+*.sqlite
+*.csv

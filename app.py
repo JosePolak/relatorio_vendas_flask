@@ -1,31 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
-import sqlite3
+from db import get_vendas, inserir_venda
 
 
 app = Flask(__name__)
-
-
-def get_vendas():
-    conn = sqlite3.connect('database/vendas.db')
-    cursor = conn.cursor()
-
-    cursor.execute('''
-        SELECT produto, quantidade, valor
-        FROM vendas
-    ''')
-
-    rows = cursor.fetchall()
-    conn.close()
-
-    vendas = []
-    for produto, quantidade, valor in rows:
-        vendas.append({
-            'produto': produto,
-            'quantidade': quantidade,
-            'valor': valor
-        })
-    
-    return vendas
 
 
 @app.route('/')
@@ -46,24 +23,13 @@ def nova_venda():
     return render_template('nova_venda.html')
 
 
-@app.route('/processar_venda', methods = ['POST'])
+@app.route('/processar_venda', methods=['POST'])
 def processar_venda():
     produto = request.form['produto']
-    quantidade = request.form['quantidade']
-    valor = request.form['valor']
-    
-    conn = sqlite3.connect('database/vendas.db')
-    cursor = conn.cursor()
+    quantidade = int(request.form['quantidade'])
+    valor = float(request.form['valor'])
 
-    cursor.execute('''
-        INSERT INTO vendas (produto, quantidade, valor)
-        VALUES (?, ?, ?)
-        ''',
-        (produto, quantidade, valor)
-    )
-
-    conn.commit()
-    conn.close()
+    inserir_venda(produto, quantidade, valor)
 
     return redirect(url_for('home'))
 

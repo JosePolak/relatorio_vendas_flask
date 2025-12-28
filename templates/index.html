@@ -1,93 +1,27 @@
-<DOCTYPE! html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Relatório de vendas</title>
-        <style>
-            body {
-                font-family: sans-serif;
-                padding: 20px;
-                line-height: 1.6;
-            }
+{% block title %}Relatório de Vendas{% endblock %}
 
-            table {
-                width: 100%;
-                max-width: 600px;
-                border-collapse: saparate;
-                border-spacing: 0;
-                border: 1px solid #ccc;
-                border-radius: 1px;
-                overflow: hidden;
-                margin-top: 20px;
-            }
+{% block content %}
+    <h2>Resumo</h2>
 
-            th, td {
-                padding: 10px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }
+    <p><strong>Total geral:</strong> R$ {{ "%.2f"|format(total) }}</p>
 
-            th {
-                background-color: #f4f4f4;
-                font-weight: bold;
-            }
+    <h2>Vendas</h2>
 
-            tr:last-child td {
-                border-bottom: none;
-            }
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Produto</th>
+            <th class="num">Quantidade</th>
+            <th class="num">Valor</th>
+        </tr>
 
-            .total {
-                margin-top: 15px;
-                font-weight: bold;
-            }
-
-            a.botao {
-                display: inline-block;
-                margin-top: 20px;
-                padding: 10px 15px;
-                background: #28a745;
-                color: white;
-                text-decoration: none;
-                border-radius: 4px;
-            }
-
-            a.botao:hover {
-                background: #218838;
-            }
-        </style>
-
-    </head>
-
-    <body>
-
-        <h1>Relatório de vendas</h1>
-
-        <table border="1" cellpadding="8" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Valor Unitário</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for item in vendas %}
-                <tr>
-                    <td>{{ item.produto }}</td>
-                    <td>{{ item.quantidade }}</td>
-                    <td>{{ item.valor }}</td>
-                    <td>{{ item.quantidade * item.valor }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
-        <h3>Total geral: R$ {{ total }}</h3>
-
-    </body>
-
-</html>
+        {% for item in vendas %}
+        <tr>
+            <td>{{ item.produto }}</td>
+            <td class="num">{{ item.quantidade }}</td>
+            <td class="num">R$ {{ item.valor }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

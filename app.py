@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for
-from db import get_vendas, inserir_venda
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from db import get_vendas, inserir_venda, get_vendas_resumo
 
 
 app = Flask(__name__)
@@ -32,6 +32,12 @@ def processar_venda():
     inserir_venda(produto, quantidade, valor)
 
     return redirect(url_for('home'))
+
+
+@app.route('/api/vendas')
+def api_vendas():
+    dados = get_vendas_resumo()
+    return jsonify(dados)
 
 
 if __name__ == '__main__':

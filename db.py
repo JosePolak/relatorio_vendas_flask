@@ -23,8 +23,8 @@ def get_vendas():
     for produto, quantidade, valor in rows:
         vendas.append({
             'produto': produto,
-            'quantidade': quantidade,
-            'valor': valor
+            'quantidade': int(quantidade),
+            'valor': float(valor)
         })
     
     return vendas
@@ -43,3 +43,17 @@ def inserir_venda(produto, quantidade, valor):
 
     conn.commit()
     conn.close()
+
+
+# Retorna total de registros e valor total para API JSON
+def get_vendas_resumo():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT COUNT(*), SUM(quantidade * valor) FROM vendas')
+    resultado = cursor.fetchone()
+    conn.close()
+    
+    return {
+        "total_registros": resultado[0],
+        "valor_total": resultado[1]
+    }

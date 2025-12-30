@@ -2,6 +2,8 @@
 
 Projeto simples de backend desenvolvido em Python com Flask e SQLite, com foco em **organização de código, separação de responsabilidades e apresentação de dados**.
 
+Além da interface web, a aplicação expõe uma rota de API (`/api/vendas`) que retorna dados consolidados em formato JSON, demonstrando integração backend com consumo via API.
+
 O objetivo é demonstrar boas práticas iniciais em aplicações web, indo além de scripts isolados.
 
 ---
